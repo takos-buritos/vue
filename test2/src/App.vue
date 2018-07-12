@@ -38,7 +38,10 @@
 <script>
   import Progress from "./components/Progress.vue";
 
-  export default {
+  export default {    
+    components: {
+      AppProgress: Progress
+    },
     data(){
       return{
         showRes: true,
@@ -68,9 +71,6 @@
         }
         return sum;
       }
-    },
-    components: {
-      AppProgress: Progress
     }
   }
 </script>
