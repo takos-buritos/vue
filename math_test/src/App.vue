@@ -36,6 +36,11 @@
                            @repeat="onStart"
                            @nextLevel="onNextLevel"
         ></app-result-screen>
+
+        <app-full-stat v-else-if="state == 'fullstat'"
+                           :fullStats="fullStats"
+                           @fullRepeat="onFullRepeat"
+        ></app-full-stat>
         <div v-else>Unknown state</div>
 
       </transition>
@@ -49,6 +54,10 @@ export default {
     return {
       state: 'start',
       stats:{
+        success: 0,
+        error: 0
+      },
+      fullStats:{
         success: 0,
         error: 0
       },
@@ -82,7 +91,11 @@ export default {
     }
   },
   methods:{
-    onStart(){
+    onStart(repeatQuestion = false){
+      if(repeatQuestion){
+        this.fullStats.success = this.fullStats.success - this.stats.success;
+        this.fullStats.error = this.fullStats.error - this.stats.error;
+      }
       this.state = 'question';
       this.stats.success = 0;
       this.stats.error = 0;
@@ -92,23 +105,35 @@ export default {
       this.message.text = "Good job!";
       this.message.type = "success";
       this.stats.success++;
+      this.fullStats.success++;
     },
     onQuestError(msg){
       this.state = 'message';
       this.message.text = msg;
       this.message.type = "warning";
       this.stats.error++;
+      this.fullStats.error++;
     },
     onNext(){
       if (this.questDone < this.questMax){
         this.state = 'question';
+      } else if (this.level == this.levels.length - 1){
+        this.state = 'fullstat';
       } else {
         this.state = 'results';
-      }      
+      }    
     },
     onNextLevel(){
       this.level++;
       this.onStart();
+    },
+    onFullRepeat(){
+      this.state = 'question';
+      this.stats.success = 0;
+      this.stats.error = 0;
+      this.fullStats.success = 0;
+      this.fullStats.error = 0;
+      this.level = 0;
     }
   },
   computed:{

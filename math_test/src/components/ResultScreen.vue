@@ -3,7 +3,7 @@
         <h3>Success: {{ stats.success }}</h3>
         <h3>Error: {{ stats.error }}</h3>
         <hr>
-        <button class="btn btn-primary" @click="$emit('repeat')">
+        <button class="btn btn-primary" @click="$emit('repeat', true)">
             Repeat
         </button>
         <button class="btn btn-primary" @click="$emit('nextLevel')">
