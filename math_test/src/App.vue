@@ -64,28 +64,30 @@ export default {
       message:{
         type: '',
         text: ''
-      },
-      questMax: 3,
+      },      
       level:0,
       levels:[
         {
           from: 10,
           to:40,
           range:5,
-          variants:2
+          variants:2,
+          questMax: 3
         },
         {
           from: 100,
           to:200,
           range:20,
-          variants:4
+          variants:4,
+          questMax: 4
         }
         ,
         {
           from: 500,
           to:900,
           range:40,
-          variants:6
+          variants:6,
+          questMax: 5
         }
       ]
     }
@@ -115,7 +117,7 @@ export default {
       this.fullStats.error++;
     },
     onNext(){
-      if (this.questDone < this.questMax){
+      if (this.questDone < this.curQuestMax){
         this.state = 'question';
       } else if (this.level == this.levels.length - 1){
         this.state = 'fullstat';
@@ -140,9 +142,12 @@ export default {
     questDone(){
       return this.stats.success + this.stats.error;
     },
+    curQuestMax(){
+      return this.levels[this.level].questMax;
+    },
     progressStyles(){
       return{
-        width: (this.questDone / this.questMax) * 100 + "%"
+        width: (this.questDone / this.curQuestMax) * 100 + "%"
       }
     }
   }
