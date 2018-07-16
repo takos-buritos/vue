@@ -1,5 +1,7 @@
 <template>
     <div class="alert">
+        <div :class="'timer alert-' + type">Time left: {{ curTime }}</div>
+        <hr>
         <h3>{{ x }} + {{ y }} = ?</h3>   
         <hr>
         <div class="buttons">
@@ -16,11 +18,24 @@
 <script>
     // component public object
     export default {
+        mounted() {
+            setInterval(() => {
+                this.curTime--;
+                if (this.curTime <= 3){
+                    this.type = 'danger';
+                }
+                if (this.curTime <= 0){
+                    this.$emit('error', 'Time for answer is expired!');
+                }
+            }, 1000);
+        },
         props: ['settings'],
         data(){
             return{
                 x: mtRand(this.settings.from, this.settings.to),
-                y: mtRand(this.settings.from, this.settings.to)
+                y: mtRand(this.settings.from, this.settings.to),
+                curTime: this.settings.time,
+                type: 'success'
             }
         },
         //изменяется только когда изменяются свойства от которых они зависят
@@ -52,7 +67,7 @@
                     this.$emit('error', `${this.x} + ${this.y} = ${this.good}!`);
                 }
             }
-        }
+        }       
     }
 
     // component private functions and variables
@@ -67,6 +82,7 @@
         padding-top:20px;
         background-color: #eee;
     }
+    .timer{     text-align: center;    font-size: 20px;    padding: 10px;}
     .buttons{
         display:flex;
         justify-content: space-around;

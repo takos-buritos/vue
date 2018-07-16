@@ -72,22 +72,24 @@ export default {
           to:40,
           range:5,
           variants:2,
-          questMax: 3
+          questMax: 3,
+          time:5
         },
         {
           from: 100,
           to:200,
           range:20,
           variants:4,
-          questMax: 4
-        }
-        ,
+          questMax: 4,
+          time:6
+        },
         {
           from: 500,
           to:900,
           range:40,
           variants:6,
-          questMax: 5
+          questMax: 5,
+          time:7
         }
       ]
     }
