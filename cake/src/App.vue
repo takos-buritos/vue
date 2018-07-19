@@ -44,9 +44,7 @@
                 <input type="text" class="form-control" v-model.number="layer.height">
               </td>
               <td>
-                <button class="btn btn-danger"
-                        @click="removeLayer(i)"  
-                >-</button>
+                <button class="btn btn-danger" @click="removeLayer(i)">-</button>
               </td>
             </tr>
           </tbody>
