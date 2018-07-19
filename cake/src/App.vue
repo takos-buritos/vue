@@ -2,12 +2,9 @@
   <div class="container">
     <h2>Cake builder</h2>
     <hr>
-    <button type="button" class="btn btn-primary"
-            @click="addLayer"
-    >
-      Add layer
-    </button>
+    <button type="button" class="btn btn-primary" @click="addLayer">Add layer</button>
     <hr>
+    
     <div class="row" v-show="showData">
       <div class="col col-sm-6">
         <div class="cake">
