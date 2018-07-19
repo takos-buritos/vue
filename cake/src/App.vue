@@ -12,13 +12,15 @@
       <div class="col col-sm-6">
         <div class="cake">
           <!-- contextmenu - клик правой кнопкой мыши, .prevent аналог e.preventDefault() чтобы не всплывало стандартное меню при клике правой кнопкой -->
-          <div class="layer" 
-                v-for="(layer, i) in layers" :key="i" 
-                :class="'layer-' + layer.type"
-                :style="{'height': layer.height * 10 + 'px'}"
-                @click="changeHeight(i, 1)"
-                @contextmenu.prevent="changeHeight(i, -1)"
-          ></div>
+          <draggable v-model="layers" :options="{draggable:'.layer'}">
+            <div class="layer" 
+                  v-for="(layer, i) in layers" :key="i" 
+                  :class="'layer-' + layer.type"
+                  :style="{'height': layer.height * 10 + 'px'}"
+                  @click="changeHeight(i, 1)"
+                  @contextmenu.prevent="changeHeight(i, -1)"
+            ></div>
+          </draggable>
         </div>        
       </div>
       <div class="col col-sm-6">
@@ -60,9 +62,9 @@
       <button class="btn btn-warning" style="margin-left:20px;" @click="confirmOrder = !confirmOrder">
         Order now!        
       </button>  
-      <b-modal v-model="confirmOrder">
+      <bModal v-model="confirmOrder">
         Are u sure?
-      </b-modal>    
+      </bModal>    
     </div>
        
   </div>
@@ -127,6 +129,8 @@ export default {
   .layer-biscuit{ background-color:bisque;}
   .layer-beze{ background-color:aqua;}
   .layer-curd{background-color:darkslateblue}
+
+  .layer{ cursor: move; }
 
   .price{font-size:20px;}
 </style>
