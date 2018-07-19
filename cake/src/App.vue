@@ -4,21 +4,11 @@
     <hr>
     <button type="button" class="btn btn-primary" @click="addLayer">Add layer</button>
     <hr>
-    
+
     <div class="row" v-show="showData">
       <div class="col col-sm-6">
-        <div class="cake">
-          <!-- contextmenu - клик правой кнопкой мыши, .prevent аналог e.preventDefault() чтобы не всплывало стандартное меню при клике правой кнопкой -->
-          <draggable v-model="layers" :options="{draggable:'.layer'}">
-            <div class="layer" 
-                  v-for="(layer, i) in layers" :key="i" 
-                  :class="'layer-' + layer.type"
-                  :style="{'height': layer.height * 10 + 'px'}"
-                  @click="changeHeight(i, 1)"
-                  @contextmenu.prevent="changeHeight(i, -1)"
-            ></div>
-          </draggable>
-        </div>        
+        <app-cake :layers="layers" @changeOrder="onChangeOrder">
+        </app-cake>  
       </div>
       <div class="col col-sm-6">
         <table class="table table-bordered">
@@ -99,9 +89,9 @@ export default {
     removeLayer(i){
       this.layers.splice(i, 1);
     },
-    changeHeight(i, dh){
-      this.layers[i].height = this.layers[i].height + dh;
-    }
+    onChangeOrder(newLayers){
+      this.layers = newLayers;
+    }    
   },
   computed:{
     price(){
